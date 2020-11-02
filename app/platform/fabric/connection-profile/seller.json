@@ -1,0 +1,81 @@
+{
+    "name":"triterras",
+    "version":"1.0.0",
+    "license":"Apache-2.0",
+    "client":{
+       "tlsEnable":true,
+       "adminUser": "admin",
+         "adminPassword": "adminpw",
+       "enableAuthentication":true,
+       "organization": "Seller",
+       "adminCredential":{
+          "id":"admin",
+          "password":"adminpw"
+       },
+       "connection": {
+             "timeout": {
+                 "peer": {
+                     "endorser": "300"
+                 },
+                 "orderer": "300"
+             }
+         }
+    },
+    "channels":{
+       "mychannel":{
+          "peers":{
+             "peer0.seller.triterras.com":{
+               "endorser": "6000",
+               "eventHub": "6000",
+               "eventReg": "6000"
+             },
+             "peer1.seller.triterras.com":{
+                "endorser": "6000",
+                "eventHub": "6000",
+                "eventReg": "6000"
+             }
+          },
+          "connection":{
+             "timeout":{
+                "peer":{
+                   "endorser":"6000",
+                   "eventHub":"6000",
+                   "eventReg":"6000"
+                }
+             }
+          }
+       }
+    },
+    "organizations":{
+       "Seller":{
+          "mspid":"SellerMSP",
+          "fullpath": true,
+          "adminPrivateKey":{
+             "path":"/home/mwan/mwan/hyperledger_fabric_1.4/my_first_network/triterras-complete/Testing/hyperledger/my-network/crypto-config/peerOrganizations/seller.triterras.com/users/Admin@seller.triterras.com/msp/keystore/3f1e72a8ca69f3648c0c2b82b463c988e9b5eff459f11e83132a616d52a740f8_sk"
+          },
+          "signedCert":{
+             "path":"/home/mwan/mwan/hyperledger_fabric_1.4/my_first_network/triterras-complete/Testing/hyperledger/my-network/crypto-config/peerOrganizations/seller.triterras.com/users/Admin@seller.triterras.com/msp/signcerts/Admin@seller.triterras.com-cert.pem"
+          }
+       }
+    },
+    "peers":{
+       "peer0.seller.triterras.com":{
+          "tlsCACerts":{
+             "path":"/home/mwan/mwan/hyperledger_fabric_1.4/my_first_network/triterras-complete/Testing/hyperledger/my-network/crypto-config/peerOrganizations/seller.triterras.com/peers/peer0.seller.triterras.com/tls/ca.crt"
+          },
+          "url":"grpcs://localhost:7051",
+          "grpcOptions":{
+             "ssl-target-name-override":"peer0.seller.triterras.com"
+          }
+       },
+       "peer1.seller.triterras.com":{
+          "tlsCACerts":{
+             "path":"/home/mwan/mwan/hyperledger_fabric_1.4/my_first_network/triterras-complete/Testing/hyperledger/my-network/crypto-config/peerOrganizations/seller.triterras.com/peers/peer1.seller.triterras.com/tls/ca.crt"
+          },
+          "url":"grpcs://localhost:7056",
+          "grpcOptions":{
+             "ssl-target-name-override":"peer1.seller.triterras.com"
+          }
+       }
+    }
+ }

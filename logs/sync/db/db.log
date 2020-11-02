@@ -1,0 +1,8 @@
+[2020-09-09T16:57:46.943] [INFO] PgService - SSL to Postgresql disabled
+[2020-09-09T16:57:46.943] [INFO] PgService - connecting to Postgresql postgres://hppoc:******@127.0.0.1:5432/fabricexplorer
+[2020-09-09T16:57:48.673] [DEBUG] PgService -  the getRowsBySQlCase  select * from channel where name='mychannel' and channel_genesis_hash='78ff845cabe9ecff3661a097f99d64dceaa7c85532255c055b3668f74da804c7' and network_name = 'seller' 
+[2020-09-09T16:57:48.674] [DEBUG] PgService -  the getRowsBySQlCase  select count(1) from channel where name='mychannel' and network_name = 'seller' 
+[2020-09-09T17:05:32.032] [INFO] PgService - SSL to Postgresql disabled
+[2020-09-09T17:05:32.032] [INFO] PgService - connecting to Postgresql postgres://hppoc:******@127.0.0.1:5432/fabricexplorer
+[2020-09-09T17:05:33.852] [DEBUG] PgService -  the getRowsBySQlCase  select * from channel where name='mychannel' and channel_genesis_hash='78ff845cabe9ecff3661a097f99d64dceaa7c85532255c055b3668f74da804c7' and network_name = 'seller' 
+[2020-09-09T17:05:33.856] [DEBUG] PgService -  the getRowsBySQlCase  select count(1) from channel where name='mychannel' and network_name = 'seller' 

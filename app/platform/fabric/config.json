@@ -1,0 +1,31 @@
+{
+	"network-configs": {
+		
+		"trader": {
+			"name": "trader",
+			"profile": "./connection-profile/trader.json",
+			"enableAuthentication":true
+		},
+		"seller": {
+			"name": "seller",
+			"profile": "./connection-profile/seller.json",
+			"enableAuthentication":true
+		},
+		"buyer": {
+			"name": "buyer",
+			"profile": "./connection-profile/buyer.json",
+			"enableAuthentication":true
+		},
+		"banker": {
+			"name": "banker",
+			"profile": "./connection-profile/banker.json",
+			"enableAuthentication":true
+		},
+		"shipper": {
+			"name": "shipper",
+			"profile": "./connection-profile/shipper.json",
+			"enableAuthentication":true
+		}
+	},
+	"license": "Apache-2.0"
+}
