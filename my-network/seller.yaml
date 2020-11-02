@@ -1,0 +1,29 @@
+---
+name: "seller"
+
+x-type: "hlfv1"
+
+description: "Seller"
+
+version: "1.0"
+
+client:
+  organization: Seller
+  connection:
+    timeout:
+      peer:
+        endorser: 300
+        orderer: 300
+    options:
+      grpc.keepalive_time_ms: 120000
+
+  credentialStore:
+    path: "./fabric-client-kvs-seller"
+    cryptoStore:
+      path: "./fabric-client-cvs-seller"
+    wallet: wallet-name   
+    
+  clientPrivateKey:
+    path: ./crypto-config/peerOrganizations/seller.triterras.com/users/User1@seller.triterras.com/msp/keystore/key.pem
+  clientSignedCert:
+    path: ./crypto-config/peerOrganizations/seller.triterras.com/users/User1@seller.triterras.com/msp/signcerts/User1@seller.triterras.com-cert.pem

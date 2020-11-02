@@ -1,0 +1,9 @@
+{
+	"network-configs": {
+		"my-network_byfn": {
+			"name": "my-network_byfn",
+			"profile": "./network-config.yaml"
+		}
+	},
+	"license": "Apache-2.0"
+}

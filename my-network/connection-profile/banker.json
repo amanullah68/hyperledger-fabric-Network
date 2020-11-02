@@ -1,0 +1,81 @@
+{
+    "name":"triterras",
+    "version":"1.0.0",
+    "license":"Apache-2.0",
+    "client":{
+       "tlsEnable":true,
+       "adminUser": "admin",
+         "adminPassword": "adminpw",
+       "enableAuthentication":true,
+       "organization": "Banker",
+       "adminCredential":{
+          "id":"admin",
+          "password":"adminpw"
+       },
+       "connection": {
+             "timeout": {
+                 "peer": {
+                     "endorser": "300"
+                 },
+                 "orderer": "300"
+             }
+         }
+    },
+    "channels":{
+       "mychannel":{
+          "peers":{
+             "peer0.banker.triterras.com":{
+               "endorser": "6000",
+               "eventHub": "6000",
+               "eventReg": "6000"
+             },
+             "peer1.banker.triterras.com":{
+                "endorser": "6000",
+                "eventHub": "6000",
+                "eventReg": "6000"
+             }
+          },
+          "connection":{
+             "timeout":{
+                "peer":{
+                   "endorser":"6000",
+                   "eventHub":"6000",
+                   "eventReg":"6000"
+                }
+             }
+          }
+       }
+    },
+    "organizations":{
+       "Banker":{
+          "mspid":"BankerMSP",
+          "fullpath": true,
+          "adminPrivateKey":{
+             "path":"/tmp/crypto/peerOrganizations/banker.triterras.com/users/Admin@banker.triterras.com/msp/keystore/97dcb26b82bce0ebba17ca4e64d0d78ab836f1570362b9da3074ec2cc0943fdc_sk"
+          },
+          "signedCert":{
+             "path":"/tmp/crypto/peerOrganizations/banker.triterras.com/users/Admin@banker.triterras.com/msp/signcerts/Admin@banker.triterras.com-cert.pem"
+          }
+       }
+    },
+    "peers":{
+      "peer0.banker.triterras.com":{
+         "tlsCACerts":{
+            "path":"/tmp/crypto/peerOrganizations/banker.triterras.com/peers/peer0.banker.triterras.com/tls/ca.crt"
+         },
+         "url":"grpcs://peer0.banker.triterras.com:10051",
+         "grpcOptions":{
+            "ssl-target-name-override":"peer0.banker.triterras.com"
+         }
+      },
+       "peer1.banker.triterras.com":{
+          "tlsCACerts":{
+             "path":"/tmp/crypto/peerOrganizations/banker.triterras.com/peers/peer1.banker.triterras.com/tls/ca.crt"
+          },
+          "url":"grpcs://peer1.banker.triterras.com:10056",
+          "grpcOptions":{
+             "ssl-target-name-override":"peer1.banker.triterras.com"
+          }
+       }
+    }
+ }

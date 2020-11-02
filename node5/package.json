@@ -1,0 +1,19 @@
+{
+	"name": "triterras",
+	"version": "1.0.0",
+	"description": "node-js version of example_02.go chaincode",
+	"main": "index.js",
+	"engines": {
+		"node": ">=8.4.0",
+		"npm": ">=5.3.0"
+	},
+	"scripts": {
+		"start": "node triterras.js"
+	},
+	"engine-strict": true,
+	"license": "Apache-2.0",
+	"dependencies": {
+		"fabric-contract-api": "^1.4.0",
+		"fabric-shim": "^1.4.0"
+	}
+}

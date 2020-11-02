@@ -1,0 +1,28 @@
+---
+name: "buyer"
+
+x-type: "hlfv1"
+
+description: "Balance Transfer Network - client definition for Buyer"
+
+version: "1.0"
+
+client:
+
+  organization: Buyer
+  connection:
+    timeout:
+      peer:
+        endorser: 300
+        orderer: 300
+
+  credentialStore:
+    path: "./fabric-client-kvs-buyer"
+    cryptoStore:
+      path: "./fabric-client-cvs-buyer"
+    wallet: wallet-name
+    
+  clientPrivateKey:
+    path: ./crypto-config/peerOrganizations/buyer.triterras.com/users/User1@buyer.triterras.com/msp/keystore/key.pem
+  clientSignedCert:
+    path: ./crypto-config/peerOrganizations/buyer.triterras.com/users/User1@buyer.triterras.com/msp/signcerts/User1@buyer.triterras.com-cert.pem

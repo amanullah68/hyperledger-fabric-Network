@@ -1,0 +1,28 @@
+---
+name: "trader-sell-to-buyer"
+
+x-type: "hlfv1"
+
+description: "Balance Transfer Network - client definition for Trader"
+
+version: "1.0"
+
+client:
+
+  organization: Trader
+  connection:
+    timeout:
+      peer:
+        endorser: 300
+        orderer: 300
+
+  credentialStore:
+    path: "./fabric-client-kvs-trader"
+    cryptoStore:
+      path: "./fabric-client-cvs-trader"
+    wallet: wallet-name
+    
+  clientPrivateKey:
+    path: ./crypto-config/peerOrganizations/trader.triterras.com/users/User1@trader.triterras.com/msp/keystore/key.pem
+  clientSignedCert:
+    path: ./crypto-config/peerOrganizations/trader.triterras.com/users/User1@trader.triterras.com/msp/signcerts/User1@trader.triterras.com-cert.pem

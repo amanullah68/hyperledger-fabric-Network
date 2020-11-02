@@ -1,0 +1,324 @@
+{
+	"name": "triterras",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"client": {
+		"tlsEnable": true,
+		"adminUser": "admin",
+		"adminPassword": "adminpw",
+		"enableAuthentication": true,
+		"organization": "Seller",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"mychannel": {
+			"peers": {
+				"peer0.seller.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.seller.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.trader.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.trader.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.buyer.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.buyer.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.banker.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.banker.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.shipper.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.shipper.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		},
+		"mychannel2": {
+			"peers": {
+				"peer0.seller.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.seller.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.trader.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.trader.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.buyer.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.buyer.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.banker.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.banker.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				},
+				"peer0.shipper.triterras.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+				},
+				"peer1.shipper.triterras.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+				}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"Seller": {
+			"mspid": "SellerMSP",
+			"adminPrivateKey": {
+				"path": "crypto-config/peerOrganizations/seller.triterras.com/users/Admin@seller.triterras.com/msp/keystore/db859e250130e8ffdbc6308fd5adde9dea145f8ed3ffee1c4e4a8cb641406eff_sk"
+			},
+			"signedCert": {
+				"path": "crypto-config/peerOrganizations/seller.triterras.com/users/Admin@seller.triterras.com/msp/signcerts/Admin@seller.triterras.com-cert.pem"
+			}
+		},
+		"Trader": {
+			"mspid": "TraderMSP",
+			"adminPrivateKey": {
+				"path": "crypto-config/peerOrganizations/trader.triterras.com/users/Admin@trader.triterras.com/msp/keystore/3323a71baa9b2413e553d3331e24b53d814f50e7fb4cc9b3ee73e326c2c0032c_sk"
+			},
+			"signedCert": {
+				"path": "crypto-config/peerOrganizations/trader.triterras.com/users/Admin@trader.triterras.com/msp/signcerts/Admin@trader.triterras.com-cert.pem"
+			}
+		},
+		"Buyer": {
+			"mspid": "BuyerMSP",
+			"adminPrivateKey": {
+				"path": "crypto-config/peerOrganizations/buyer.triterras.com/users/Admin@buyer.triterras.com/msp/keystore/cff83f8dd694b43382b9bbf73a0ad95e125504b45e61a064dc8f55576002ee4f_sk"
+			},
+			"signedCert": {
+				"path": "crypto-config/peerOrganizations/buyer.triterras.com/users/Admin@buyer.triterras.com/msp/signcerts/Admin@buyer.triterras.com-cert.pem"
+			}
+		},
+		"Banker": {
+			"mspid": "BankerMSP",
+			"adminPrivateKey": {
+				"path": "crypto-config/peerOrganizations/seller.triterras.com/users/Admin@seller.triterras.com/msp/keystore/db859e250130e8ffdbc6308fd5adde9dea145f8ed3ffee1c4e4a8cb641406eff_sk"
+			},
+			"signedCert": {
+				"path": "crypto-config/peerOrganizations/banker.triterras.com/users/Admin@banker.triterras.com/msp/signcerts/Admin@banker.triterras.com-cert.pem"
+			}
+		},
+		"Shipper": {
+			"mspid": "ShipperMSP",
+			"adminPrivateKey": {
+				"path": "crypto-config/peerOrganizations/shipper.triterras.com/users/Admin@shipper.triterras.com/msp/keystore/423487eb71ff3dc3f93b25a86437f74c0a3938082f7abb621a52446c6e1ff46a_sk"
+			},
+			"signedCert": {
+				"path": "crypto-config/peerOrganizations/shipper.triterras.com/users/Admin@shipper.triterras.com/msp/signcerts/Admin@shipper.triterras.com-cert.pem"
+			}
+		}
+	},
+	"orderers": {
+		"orderer.triterras.com": {
+			"tlsCACerts": {
+				"path": "crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:7050",
+			"grpcOptions": {
+				"ssl-target-name-override": "orderer.triterras.com"
+			}
+		}
+	},
+	"peers": {
+		"peer0.seller.triterras.com": {
+			"tlsCACerts": {
+				"path": "peerOrganizations/seller.triterras.com/peers/peer0.seller.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:7051",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.seller.triterras.com"
+			}
+		},
+		"peer1.seller.triterras.com": {
+			"tlsCACerts": {
+				"path": "peerOrganizations/seller.triterras.com/peers/peer0.seller.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:7056",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.seller.triterras.com"
+			}
+		},
+		"peer0.trader.triterras.com": {
+			"tlsCACerts": {
+				"path": "peerOrganizations/trader.triterras.com/peers/peer0.trader.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:8051",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.trader.triterras.com"
+			}
+		},
+		"peer1.trader.triterras.com": {
+			"tlsCACerts": {
+				"path": "peerOrganizations/trader.triterras.com/peers/peer0.trader.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:8056",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.trader.triterras.com"
+			}
+		},
+		"peer0.buyer.triterras.com": {
+			"tlsCACerts": {
+				"path": "crypto-config/peerOrganizations/buyer.triterras.com/peers/peer0.buyer.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:9051",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.buyer.triterras.com"
+			}
+		},
+		"peer1.buyer.triterras.com": {
+			"tlsCACerts": {
+				"path": "crypto-config/peerOrganizations/seller.triterras.com/peers/peer0.buyer.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:9056",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.buyer.triterras.com"
+			}
+		},
+		"peer0.banker.triterras.com": {
+			"tlsCACerts": {
+				"path": "crypto-config/peerOrganizations/banker.triterras.com/peers/peer0.banker.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:10051",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.banker.triterras.com"
+			}
+		},
+		"peer1.banker.triterras.com": {
+			"tlsCACerts": {
+				"path": "crypto-config/peerOrganizations/banker.triterras.com/peers/peer0.banker.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:10056",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.banker.triterras.com"
+			}
+		},
+		"peer0.shipper.triterras.com": {
+			"tlsCACerts": {
+				"path": "crypto-config/peerOrganizations/shipper.triterras.com/peers/peer0.shipper.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:11051",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.shipper.triterras.com"
+			}
+		},
+		"peer1.shipper.triterras.com": {
+			"tlsCACerts": {
+				"path": "crypto-config/peerOrganizations/shipper.triterras.com/peers/peer0.shipper.triterras.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:11056",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.shipper.triterras.com"
+			}
+		}
+	},
+	"certificateAuthorities": {
+		"ca-seller": {
+			"url": "http://localhost:7054",
+			"caName": "ca-seller"
+		}
+	}
+}

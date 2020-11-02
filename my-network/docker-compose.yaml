@@ -1,0 +1,538 @@
+version: '2'
+
+networks:
+  my-network_byfn:
+    external:
+      name: my-network_byfn
+
+services: 
+  ca.seller.triterras.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-seller
+      - >-
+        FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.seller.triterras.com-cert.pem
+      - >-
+        FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/463a56dd13ee7f8f5ffc30c73de2aeddcefca12510df2aa1ece856306e48d8ef_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+    ports:
+      - '7054:7054'
+    command: 'sh -c ''fabric-ca-server start -b admin:adminpw -d'''
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/seller.triterras.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerSeller
+    networks:
+      - my-network_byfn
+  ca.trader.triterras.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-trader
+      - >-
+        FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.trader.triterras.com-cert.pem
+      - >-
+        FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/238feca57e12ed9cef230ca8eb0dd4bde5caf19fb405a0bcf73eddfa23fbd4b5_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+    ports:
+      - '8054:7054'
+    command: 'sh -c ''fabric-ca-server start -b admin:adminpw -d'''
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/trader.triterras.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerTrader
+    networks:
+      - my-network_byfn
+  ca.buyer.triterras.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-buyer
+      - >-
+        FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.buyer.triterras.com-cert.pem
+      - >-
+        FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/e8ad1430253d96135a8be2044abef0072fa6157779a006721faa3af24016f138_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+    ports:
+      - '9054:7054'
+    command: 'sh -c ''fabric-ca-server start -b admin:adminpw -d'''
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/buyer.triterras.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerBuyer
+    networks:
+      - my-network_byfn
+  ca.banker.triterras.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-banker
+      - >-
+        FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.banker.triterras.com-cert.pem
+      - >-
+        FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4a333133a0fb787a0d76c5c1efd2da28197298bb1a5fd7a2df0d2cd33fc8ce6f_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+    ports:
+      - '10054:7054'
+    command: 'sh -c ''fabric-ca-server start -b admin:adminpw -d'''
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/banker.triterras.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerBanker
+    networks:
+      - my-network_byfn
+  ca.shipper.triterras.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-shipper
+      - >-
+        FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.shipper.triterras.com-cert.pem
+      - >-
+        FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/15f65c924e0f97c32d336c8c4f9e14d493cd99cd6ccfeb4faed56496dc73db5d_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+    ports:
+      - '11054:7054'
+    command: 'sh -c ''fabric-ca-server start -b admin:adminpw -d'''
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/shipper.triterras.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerShipper
+    networks:
+      - my-network_byfn
+  orderer.triterras.com:
+    container_name: orderer.triterras.com
+    image: hyperledger/fabric-orderer
+    environment:
+      - FABRIC_LOGGING_SPEC=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/crypto/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - >-
+        ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - 'ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]'
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_CLUSTER_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    command: orderer
+    ports:
+      - '7050:7050'
+    volumes:
+      - './channel-artifacts:/etc/hyperledger/configtx'
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/msp:/etc/hyperledger/crypto/orderer/msp
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/tls/:/etc/hyperledger/crypto/orderer/tls
+    networks:
+      - my-network_byfn
+  orderer2.triterras.com:
+    container_name: orderer2.triterras.com
+    image: hyperledger/fabric-orderer
+    environment:
+      - FABRIC_LOGGING_SPEC=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/crypto/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - >-
+        ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - 'ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]'
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_CLUSTER_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    command: orderer
+    ports:
+      - '8050:7050'
+    volumes:
+      - './channel-artifacts:/etc/hyperledger/configtx'
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer2.triterras.com/msp:/etc/hyperledger/crypto/orderer/msp
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer2.triterras.com/tls/:/etc/hyperledger/crypto/orderer/tls
+    networks:
+      - my-network_byfn
+  orderer3.triterras.com:
+    container_name: orderer3.triterras.com
+    image: hyperledger/fabric-orderer
+    environment:
+      - FABRIC_LOGGING_SPEC=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/crypto/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - >-
+        ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - 'ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]'
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_CLUSTER_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    command: orderer
+    ports:
+      - '9050:7050'
+    volumes:
+      - './channel-artifacts:/etc/hyperledger/configtx'
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer3.triterras.com/msp:/etc/hyperledger/crypto/orderer/msp
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer3.triterras.com/tls/:/etc/hyperledger/crypto/orderer/tls
+    networks:
+      - my-network_byfn
+  orderer4.triterras.com:
+    container_name: orderer4.triterras.com
+    image: hyperledger/fabric-orderer
+    environment:
+      - FABRIC_LOGGING_SPEC=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/crypto/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - >-
+        ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - 'ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]'
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_CLUSTER_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    command: orderer
+    ports:
+      - '10050:7050'
+    volumes:
+      - './channel-artifacts:/etc/hyperledger/configtx'
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer4.triterras.com/msp:/etc/hyperledger/crypto/orderer/msp
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer4.triterras.com/tls/:/etc/hyperledger/crypto/orderer/tls
+    networks:
+      - my-network_byfn
+  orderer5.triterras.com:
+    container_name: orderer5.triterras.com
+    image: hyperledger/fabric-orderer
+    environment:
+      - FABRIC_LOGGING_SPEC=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/crypto/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - >-
+        ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - 'ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]'
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/crypto/orderer/tls/server.crt
+      - >-
+        ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/crypto/orderer/tls/server.key
+      - >-
+        ORDERER_GENERAL_CLUSTER_ROOTCAS=[/etc/hyperledger/crypto/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    command: orderer
+    ports:
+      - '11050:7050'
+    volumes:
+      - './channel-artifacts:/etc/hyperledger/configtx'
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer5.triterras.com/msp:/etc/hyperledger/crypto/orderer/msp
+      - >-
+        ./crypto-config/ordererOrganizations/triterras.com/orderers/orderer5.triterras.com/tls/:/etc/hyperledger/crypto/orderer/tls
+    networks:
+      - my-network_byfn
+  peer0.seller.triterras.com:
+    container_name: peer0.seller.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.seller.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer0.seller.triterras.com:7051'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:7051'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer0.seller.triterras.com:7052'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer1.seller.triterras.com:7056'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.seller.triterras.com:7051'
+      - CORE_PEER_LOCALMSPID=SellerMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '7051:7051'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/seller.triterras.com/peers/peer0.seller.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer1.seller.triterras.com:
+    container_name: peer1.seller.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.seller.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer1.seller.triterras.com:7056'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:7056'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer1.seller.triterras.com:7057'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7057'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer0.seller.triterras.com:7051'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.seller.triterras.com:7056'
+      - CORE_PEER_LOCALMSPID=SellerMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '7056:7056'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/seller.triterras.com/peers/peer1.seller.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer0.trader.triterras.com:
+    container_name: peer0.trader.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.trader.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer0.trader.triterras.com:8051'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:8051'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer0.trader.triterras.com:8052'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer1.trader.triterras.com:8056'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.trader.triterras.com:8051'
+      - CORE_PEER_LOCALMSPID=TraderMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '8051:8051'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/trader.triterras.com/peers/peer0.trader.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer1.trader.triterras.com:
+    container_name: peer1.trader.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.trader.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer1.trader.triterras.com:8056'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:8056'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer1.trader.triterras.com:8057'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8057'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer0.trader.triterras.com:8051'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.trader.triterras.com:8056'
+      - CORE_PEER_LOCALMSPID=TraderMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '8056:8056'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/trader.triterras.com/peers/peer1.trader.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer0.buyer.triterras.com:
+    container_name: peer0.buyer.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.buyer.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer0.buyer.triterras.com:9051'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:9051'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer0.buyer.triterras.com:9052'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer1.buyer.triterras.com:9056'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.buyer.triterras.com:9051'
+      - CORE_PEER_LOCALMSPID=BuyerMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '9051:9051'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/buyer.triterras.com/peers/peer0.buyer.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer1.buyer.triterras.com:
+    container_name: peer1.buyer.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.buyer.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer1.buyer.triterras.com:9056'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:9056'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer1.buyer.triterras.com:9057'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9057'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer0.buyer.triterras.com:9051'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.buyer.triterras.com:9056'
+      - CORE_PEER_LOCALMSPID=BuyerMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '9056:9056'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/buyer.triterras.com/peers/peer1.buyer.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer0.banker.triterras.com:
+    container_name: peer0.banker.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.banker.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer0.banker.triterras.com:10051'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:10051'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer0.banker.triterras.com:10052'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer1.banker.triterras.com:10056'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.banker.triterras.com:10051'
+      - CORE_PEER_LOCALMSPID=BankerMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '10051:10051'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/banker.triterras.com/peers/peer0.banker.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer1.banker.triterras.com:
+    container_name: peer1.banker.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.banker.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer1.banker.triterras.com:10056'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:10056'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer1.banker.triterras.com:10057'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10057'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer0.banker.triterras.com:10051'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.banker.triterras.com:10056'
+      - CORE_PEER_LOCALMSPID=BankerMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '10056:10056'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/banker.triterras.com/peers/peer1.banker.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer0.shipper.triterras.com:
+    container_name: peer0.shipper.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.shipper.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer0.shipper.triterras.com:11051'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:11051'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer0.shipper.triterras.com:11052'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer1.shipper.triterras.com:11056'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.shipper.triterras.com:11051'
+      - CORE_PEER_LOCALMSPID=ShipperMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '11051:11051'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/shipper.triterras.com/peers/peer0.shipper.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn
+  peer1.shipper.triterras.com:
+    container_name: peer1.shipper.triterras.com
+    extends:
+      file: base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.shipper.triterras.com
+      - FABRIC_LOGGING_SPEC=info
+      - 'CORE_PEER_ADDRESS=peer1.shipper.triterras.com:11056'
+      - 'CORE_PEER_LISTENADDRESS=0.0.0.0:11056'
+      - 'CORE_PEER_CHAINCODEADDRESS=peer1.shipper.triterras.com:11057'
+      - 'CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11057'
+      - 'CORE_PEER_GOSSIP_BOOTSTRAP=peer0.shipper.triterras.com:11051'
+      - 'CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.shipper.triterras.com:11056'
+      - CORE_PEER_LOCALMSPID=ShipperMSP
+      - CORE_CHAINCODE_STARTUPTIMEOUT=1200s
+      - CORE_CHAINCODE_EXECUTETIMEOUT=800s
+    ports:
+      - '11056:11056'
+    volumes:
+      - >-
+        ./crypto-config/peerOrganizations/shipper.triterras.com/peers/peer1.shipper.triterras.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      - orderer.triterras.com
+    networks:
+      - my-network_byfn

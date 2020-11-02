@@ -1,0 +1,496 @@
+---
+name: "triterras"
+
+x-type: "hlfv1"
+
+description: "Triterras Network"
+
+version: "1.0"
+
+
+client:
+  adminUser: "admin"
+  adminPassword: "adminpw"
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+        orderer: 300
+
+
+channels:
+    # name of the channel
+  mychannel:
+    orderers:
+      - orderer.triterras.com
+      - orderer2.triterras.com
+      - orderer3.triterras.com
+      - orderer4.triterras.com
+      - orderer5.triterras.com
+
+    # Required. list of peers from participating orgs
+    peers:
+      peer0.seller.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.seller.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.trader.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.trader.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.buyer.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.buyer.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.banker.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        
+      peer1.banker.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.shipper.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+            
+      peer1.shipper.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+  mychannel1:
+    orderers:
+      - orderer3.triterras.com
+      - orderer4.triterras.com
+      - orderer5.triterras.com
+
+    peers:
+      peer0.trader.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.trader.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.buyer.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.buyer.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.banker.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        
+      peer1.banker.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.shipper.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+            
+      peer1.shipper.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+  mychannel2:
+    orderers:
+      - orderer.triterras.com
+      - orderer2.triterras.com
+      - orderer3.triterras.com
+      - orderer4.triterras.com
+      - orderer5.triterras.com
+
+    # Required. list of peers from participating orgs
+    peers:
+      peer0.seller.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.seller.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.trader.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.trader.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.buyer.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.buyer.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.banker.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        
+      peer1.banker.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.shipper.triterras.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+            
+      peer1.shipper.triterras.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+#
+# list of participating organizations in this network
+#
+organizations:
+  Seller:
+    mspid: SellerMSP
+    peers:
+      - peer0.seller.triterras.com
+      - peer1.seller.triterras.com
+    certificateAuthorities:
+      - ca-seller
+    adminPrivateKey:
+      path: my-network/crypto-config/peerOrganizations/seller.triterras.com/users/Admin@seller.triterras.com/msp/keystore/3f1e72a8ca69f3648c0c2b82b463c988e9b5eff459f11e83132a616d52a740f8_sk
+    signedCert:
+      path: my-network/crypto-config/peerOrganizations/seller.triterras.com/users/Admin@seller.triterras.com/msp/signcerts/Admin@seller.triterras.com-cert.pem
+
+
+  Trader:
+    mspid: TraderMSP
+    peers:
+      - peer0.trader.triterras.com
+      - peer1.trader.triterras.com
+    certificateAuthorities:
+      - ca-trader
+    adminPrivateKey:
+      path: my-network/crypto-config/peerOrganizations/trader.triterras.com/users/Admin@trader.triterras.com/msp/keystore/daedbb68f917ba1579eff6e6091bdd97ea9cff764b76d9a5c2594363733b3feb_sk
+    signedCert:
+      path: my-network/crypto-config/peerOrganizations/trader.triterras.com/users/Admin@trader.triterras.com/msp/signcerts/Admin@trader.triterras.com-cert.pem
+
+
+  Buyer:
+    mspid: BuyerMSP
+    peers:
+        - peer0.buyer.triterras.com
+        - peer1.buyer.triterras.com
+    certificateAuthorities:
+        - ca-buyer
+    adminPrivateKey:
+        path: my-network/crypto-config/peerOrganizations/buyer.triterras.com/users/Admin@buyer.triterras.com/msp/keystore/fcb712ea6bf4b83609a29cda98a69d68b3df700471f44a85e774fae6ffc66b8b_sk
+    signedCert:
+        path: my-network/crypto-config/peerOrganizations/buyer.triterras.com/users/Admin@buyer.triterras.com/msp/signcerts/Admin@buyer.triterras.com-cert.pem
+
+
+  Banker:
+    mspid: BankerMSP
+    peers:
+        - peer0.banker.triterras.com
+        - peer1.banker.triterras.com
+    certificateAuthorities:
+        - ca-banker
+    adminPrivateKey:
+        path: my-network/crypto-config/peerOrganizations/banker.triterras.com/users/Admin@banker.triterras.com/msp/keystore/97dcb26b82bce0ebba17ca4e64d0d78ab836f1570362b9da3074ec2cc0943fdc_sk
+    signedCert:
+        path: my-network/crypto-config/peerOrganizations/banker.triterras.com/users/Admin@banker.triterras.com/msp/signcerts/Admin@banker.triterras.com-cert.pem
+
+
+  Shipper:
+    mspid: ShipperMSP
+    peers:
+        - peer0.shipper.triterras.com
+        - peer1.shipper.triterras.com
+    certificateAuthorities:
+        - ca-shipper
+    adminPrivateKey:
+        path: my-network/crypto-config/peerOrganizations/shipper.triterras.com/users/Admin@shipper.triterras.com/msp/keystore/25f408893ae598535b96244d2019db598688a05838b9b1ff48153c6948e58711_sk
+    signedCert:
+        path: my-network/crypto-config/peerOrganizations/shipper.triterras.com/users/Admin@shipper.triterras.com/msp/signcerts/Admin@shipper.triterras.com-cert.pem
+
+
+orderers:
+  orderer.triterras.com:
+    url: grpcs://localhost:7050
+    grpcOptions:
+      ssl-target-name-override: orderer.triterras.com
+      grpc.keepalive_timeout_ms: 80000
+    tlsCACerts:
+      path: my-network/crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/tls/ca.crt
+
+
+  orderer2.triterras.com:
+    url: grpcs://localhost:8050
+    grpcOptions:
+      ssl-target-name-override: orderer2.triterras.com
+      grpc.keepalive_timeout_ms: 80000
+    tlsCACerts:
+      path: my-network/crypto-config/ordererOrganizations/triterras.com/orderers/orderer2.triterras.com/tls/ca.crt
+
+  orderer3.triterras.com:
+    url: grpcs://localhost:9050
+    grpcOptions:
+      ssl-target-name-override: orderer3.triterras.com
+      grpc.keepalive_timeout_ms: 80000
+    tlsCACerts:
+      path: my-network/crypto-config/ordererOrganizations/triterras.com/orderers/orderer3.triterras.com/tls/ca.crt
+
+  orderer4.triterras.com:
+    url: grpcs://localhost:10050
+    grpcOptions:
+      ssl-target-name-override: orderer4.triterras.com
+      grpc.keepalive_timeout_ms: 80000
+    tlsCACerts:
+      path: my-network/crypto-config/ordererOrganizations/triterras.com/orderers/orderer4.triterras.com/tls/ca.crt
+
+  orderer5.triterras.com:
+    url: grpcs://localhost:11050
+    grpcOptions:
+      ssl-target-name-override: orderer5.triterras.com
+      grpc.keepalive_timeout_ms: 80000
+    tlsCACerts:
+      path: my-network/crypto-config/ordererOrganizations/triterras.com/orderers/orderer5.triterras.com/tls/ca.crt
+
+#
+# List of peers to send various requests to, including endorsement, query
+# and event listener registration.
+#
+peers:
+  peer0.seller.triterras.com:
+    url: grpcs://localhost:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.seller.triterras.com
+    tlsCACerts:
+      path: crypto-config/peerOrganizations/seller.triterras.com/peers/peer0.seller.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+  peer1.seller.triterras.com:
+    url: grpcs://localhost:7056
+    grpcOptions:
+      ssl-target-name-override: peer1.seller.triterras.com
+    tlsCACerts:
+      path: crypto-config/peerOrganizations/seller.triterras.com/peers/peer1.seller.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+  peer0.trader.triterras.com:
+    url: grpcs://localhost:8051
+    grpcOptions:
+      ssl-target-name-override: peer0.trader.triterras.com
+    tlsCACerts:
+      path: crypto-config/peerOrganizations/trader.triterras.com/peers/peer0.trader.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+  peer1.trader.triterras.com:
+    url: grpcs://localhost:8056
+    eventUrl: grpcs://localhost:8058
+    grpcOptions:
+      ssl-target-name-override: peer1.trader.triterras.com
+    tlsCACerts:
+      path: crypto-config/peerOrganizations/trader.triterras.com/peers/peer1.trader.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+  peer0.buyer.triterras.com:
+    url: grpcs://localhost:9051
+    grpcOptions:
+        ssl-target-name-override: peer0.buyer.triterras.com
+    tlsCACerts:
+        path: crypto-config/peerOrganizations/buyer.triterras.com/peers/peer0.buyer.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+  peer1.buyer.triterras.com:
+    url: grpcs://localhost:9056
+    eventUrl: grpcs://localhost:9058
+    grpcOptions:
+        ssl-target-name-override: peer1.buyer.triterras.com
+    tlsCACerts:
+        path: crypto-config/peerOrganizations/buyer.triterras.com/peers/peer1.buyer.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+  peer0.banker.triterras.com:
+    url: grpcs://localhost:10051
+    grpcOptions:
+        ssl-target-name-override: peer0.banker.triterras.com
+    tlsCACerts:
+        path: crypto-config/peerOrganizations/banker.triterras.com/peers/peer0.banker.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+        
+  peer1.banker.triterras.com:
+    url: grpcs://localhost:10056
+    eventUrl: grpcs://localhost:10058
+    grpcOptions:
+        ssl-target-name-override: peer1.banker.triterras.com
+    tlsCACerts:
+        path: crypto-config/peerOrganizations/banker.triterras.com/peers/peer1.banker.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+  peer0.shipper.triterras.com:
+    url: grpcs://localhost:11051
+    grpcOptions:
+        ssl-target-name-override: peer0.shipper.triterras.com
+    tlsCACerts:
+        path: crypto-config/peerOrganizations/shipper.triterras.com/peers/peer0.shipper.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+            
+  peer1.shipper.triterras.com:
+    url: grpcs://localhost:11056
+    eventUrl: grpcs://localhost:11058
+    grpcOptions:
+        ssl-target-name-override: peer1.shipper.triterras.com
+    tlsCACerts:
+        path: crypto-config/peerOrganizations/shipper.triterras.com/peers/peer1.shipper.triterras.com/tls/ca.crt
+    chaincode:
+      startuptimeout: 1200s
+      executetimeout: 800s
+
+#
+# Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
+# certificate management to be done via REST APIs. Application may choose to use a standard
+# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
+#
+certificateAuthorities:
+  ca-seller:
+    url: https://localhost:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: my-network/crypto-config/peerOrganizations/seller.triterras.com/ca/ca.seller.triterras.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca-seller
+
+  ca-trader:
+    url: https://localhost:8054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: my-network/crypto-config/peerOrganizations/trader.triterras.com/ca/ca.trader.triterras.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca-trader
+
+  ca-buyer:
+    url: https://localhost:9054
+    httpOptions:
+        verify: false
+    tlsCACerts:
+        path: my-network/crypto-config/peerOrganizations/buyer.triterras.com/ca/ca.buyer.triterras.com-cert.pem
+    registrar:
+        - enrollId: admin
+          enrollSecret: adminpw
+    caName: ca-buyer
+
+  ca-banker:
+    url: https://localhost:10054
+    httpOptions:
+        verify: false
+    tlsCACerts:
+        path: my-network/crypto-config/peerOrganizations/banker.triterras.com/ca/ca.banker.triterras.com-cert.pem
+    registrar:
+        - enrollId: admin
+          enrollSecret: adminpw
+    caName: ca-banker
+
+  ca-shipper:
+    url: https://localhost:11054
+    httpOptions:
+        verify: false
+    tlsCACerts:
+        path: my-network/crypto-config/peerOrganizations/shipper.triterras.com/ca/ca.shipper.triterras.com-cert.pem
+    registrar:
+        - enrollId: admin
+          enrollSecret: adminpw
+    caName: ca-shipper

@@ -1,0 +1,28 @@
+---
+name: "banker"
+
+x-type: "hlfv1"
+
+description: "Balance Transfer Network - client definition for Banker"
+
+version: "1.0"
+
+client:
+
+  organization: Banker
+  connection:
+    timeout:
+      peer:
+        endorser: 300
+        orderer: 300
+
+  credentialStore:
+    path: "./fabric-client-kvs-banker"
+    cryptoStore:
+      path: "./fabric-client-cvs-banker"
+    wallet: wallet-name
+    
+    clientPrivateKey:
+      path: ./crypto-config/peerOrganizations/banker.triterras.com/users/User1@banker.triterras.com/msp/keystore/key.pem
+    clientSignedCert:
+      path: ./crypto-config/peerOrganizations/banker.triterras.com/users/User1@banker.triterras.com/msp/signcerts/User1@banker.triterras.com-cert.pem

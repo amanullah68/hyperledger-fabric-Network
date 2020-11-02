@@ -1,0 +1,51 @@
+version: '2'
+volumes:
+  pgdata: null
+  walletstore: null
+
+networks:
+    my-network_byfn:
+      external:
+        name: my-network_byfn
+
+services:
+  explorerdb.triterras.com:
+    image: hyperledger/explorer-db:1.0.0
+    container_name: explorerdb.triterras.com
+    hostname: explorerdb.triterras.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+    networks:
+      - my-network_byfn
+
+  explorer.triterras.com:
+    image: hyperledger/explorer:1.0.0
+    container_name: explorer.triterras.com
+    hostname: explorer.triterras.com
+    environment:
+      - DATABASE_HOST=explorerdb.triterras.com
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=debug
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+    volumes:
+      - ./config1.json:/opt/explorer/app/platform/fabric/config.json
+      - ./connection-profile:/opt/explorer/app/platform/fabric/connection-profile/
+      - ./crypto-config:/tmp/crypto
+      - walletstore:/opt/wallet
+    command: sh -c "node /opt/explorer/main.js && tail -f /dev/null"
+    ports:
+      - '8080:8080'
+    depends_on:
+      - explorerdb.triterras.com
+    networks:
+      - my-network_byfn
+      

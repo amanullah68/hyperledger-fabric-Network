@@ -1,0 +1,306 @@
+[
+    {
+        "name": "collectionShared",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "SellerMSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "TraderMSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "BuyerMSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "BankerMSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "ShipperMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    },
+                    {
+                        "signed-by": 1
+                    },
+                    {
+                        "signed-by": 2
+                    },
+                    {
+                        "signed-by": 3
+                    },
+                    {
+                        "signed-by": 4
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 1,
+        "maxPeerCount": 5,
+        "blockToLive": 100,
+        "memberOnlyRead": true,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "collectionPrivate",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "peer",
+                        "mspId": "SellerMSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "peer",
+                        "mspId": "TraderMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 1
+                    },
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 1,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "collectionPrivate1",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "TraderMSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "BuyerMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 1
+                    },
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 1,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": true,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "seller_users",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "peer",
+                        "mspId": "SellerMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "trader_users",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "peer",
+                        "mspId": "TraderMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "buyer_users",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "peer",
+                        "mspId": "BuyerMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "banker_users",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "peer",
+                        "mspId": "BankerMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "shipper_users",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "peer",
+                        "mspId": "ShipperMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "seller_products",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "SellerMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    },
+    {
+        "name": "buyer_products",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "BuyerMSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 2,
+        "blockToLive": 100,
+        "memberOnlyRead": false,
+        "memberOnlyWrite": true
+    }
+]

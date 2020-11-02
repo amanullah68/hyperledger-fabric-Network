@@ -1,0 +1,359 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.orderer-org:
+  # orderer1.orderer-org1:
+  # orderer2.orderer-org2:
+  peer0.seller-org:
+  peer1.seller-org:
+  peer0.trader-org:
+  peer1.trader-org:
+  peer0.buyer-org:
+  peer1.buyer-org:
+  peer0.banker-org:
+  peer1.banker-org:
+  peer0.shipper-org:
+  peer1.shipper-org:
+
+
+
+networks:
+  byfn:
+
+services:
+
+  ca.seller.triterras.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.seller.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.seller-org-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/99fc81e33be60a7f363dd9b64c111581b3a1055b91d7211b165a8d34f162ba41_sk
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    volumes:
+      - ./crypto-config/peerOrganizations/seller-org/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.seller.com
+    networks:
+      - byfn
+
+  orderer.orderer-org:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.orderer-org
+    container_name: orderer.orderer-org
+    networks:
+      - byfn
+
+  # OrdererOrg1:
+  #   extends:
+  #     file:   base/docker-compose-base.yaml
+  #     service: OrdererOrg1
+  #   container_name: OrdererOrg1
+  #   networks:
+  #     - byfn
+
+  # OrdererOrg2:
+  #   extends:
+  #     file:   base/docker-compose-base.yaml
+  #     service: OrdererOrg2
+  #   container_name: OrdererOrg2
+  #   networks:
+  #     - byfn
+
+  peer0.seller-org:
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.seller-org
+    container_name: peer0.seller-org
+    networks:
+      - byfn
+
+  peer1.seller-org:
+    container_name: peer1.seller-org
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.seller-org
+    networks:
+      - byfn
+
+  peer0.trader-org:
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.trader-org
+    container_name: peer0.trader-org
+    networks:
+      - byfn
+
+  peer1.trader-org:
+    container_name: peer1.trader-org
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.trader-org
+    networks:
+      - byfn
+
+  peer0.buyer-org:
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.buyer-org
+    container_name: peer0.buyer-org
+    networks:
+      - byfn
+
+  peer1.buyer-org:
+    container_name: peer1.buyer-org
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.buyer-org
+    networks:
+      - byfn
+
+  peer0.banker-org:
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.banker-org
+    container_name: peer0.banker-org
+    networks:
+      - byfn
+
+  peer1.banker-org:
+    container_name: peer1.banker-org
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.banker-org
+    networks:
+      - byfn
+
+
+  peer0.shipper-org:
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.shipper-org
+    container_name: peer0.shipper-org
+    networks:
+      - byfn
+
+  peer1.shipper-org:
+    container_name: peer1.shipper-org
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.shipper-org
+    networks:
+      - byfn
+
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=$SYS_CHANNEL
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.seller-org:7051
+      - CORE_PEER_LOCALMSPID=SellerOrg
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/crypto-config/peerOrganizations/seller-org/peers/peer0.seller-org/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/crypto-config/peerOrganizations/seller-org/peers/peer0.seller-org/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/crypto-config/peerOrganizations/seller-org/peers/peer0.seller-org/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/crypto-config/peerOrganizations/seller-org/users/Admin@seller-org/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.orderer-org
+      - peer0.seller-org
+      - peer1.seller-org
+      - peer0.trader-org
+      - peer1.trader-org
+      - peer0.buyer-org
+      - peer1.buyer-org
+      - peer0.banker-org
+      - peer1.banker-org
+      - peer0.shipper-org
+      - peer1.shipper-org
+    networks:
+      - byfn
+
+  cli1:
+    container_name: cli1
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=$SYS_CHANNEL
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.trader-org:9051
+      - CORE_PEER_LOCALMSPID=traderOrg
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/trader-org/peers/peer0.trader-org/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/trader-org/peers/peer0.trader-org/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/trader-org/peers/peer0.trader-org/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/trader-org/users/Admin@trader-org/msp
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.orderer-org
+      - peer0.seller-org
+      - peer1.seller-org
+      - peer0.trader-org
+      - peer1.trader-org
+      - peer0.buyer-org
+      - peer1.buyer-org
+      - peer0.banker-org
+      - peer1.banker-org
+      - peer0.shipper-org
+      - peer1.shipper-org
+    networks:
+      - byfn
+
+  
+  # cli2:
+  #   container_name: cli2
+  #   image: hyperledger/fabric-tools:$IMAGE_TAG
+  #   tty: true
+  #   stdin_open: true
+  #   environment:
+  #     - SYS_CHANNEL=$SYS_CHANNEL
+  #     - GOPATH=/opt/gopath
+  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+  #     #- FABRIC_LOGGING_SPEC=DEBUG
+  #     - FABRIC_LOGGING_SPEC=INFO
+  #     - CORE_PEER_ID=cli
+  #     - CORE_PEER_ADDRESS=peer0.buyer-org:10051
+  #     - CORE_PEER_LOCALMSPID=buyerOrgMSP
+  #     - CORE_PEER_TLS_ENABLED=true
+  #     - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/buyer-org/peers/peer0.buyer-org/tls/server.crt
+  #     - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/buyer-org/peers/peer0.buyer-org/tls/server.key
+  #     - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/buyer-org/peers/peer0.buyer-org/tls/ca.crt
+  #     - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/buyer-org/users/Admin@buyer-org/msp
+  #   command: /bin/bash
+  #   volumes:
+  #       - /var/run/:/host/var/run/
+  #       - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+  #       - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+  #       - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+  #       - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+  #   depends_on:
+  #     - OrdererOrg
+  #     - peer0.seller-org
+  #     # - peer1.seller-org
+  #     - peer0.trader-org
+  #     # - peer1.trader-org
+  #     - peer0.buyer-org
+  #     # - peer1.buyer-org
+  #     - peer0.banker-org
+  #     # - peer1.banker-org
+  #     - peer0.shipper-org
+  #     # - peer1.shipper-org
+  #   networks:
+  #     - byfn
+
+
+  # cli3:
+  #   container_name: cli3
+  #   image: hyperledger/fabric-tools:$IMAGE_TAG
+  #   tty: true
+  #   stdin_open: true
+  #   environment:
+  #     - SYS_CHANNEL=$SYS_CHANNEL
+  #     - GOPATH=/opt/gopath
+  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+  #     #- FABRIC_LOGGING_SPEC=DEBUG
+  #     - FABRIC_LOGGING_SPEC=INFO
+  #     - CORE_PEER_ID=cli
+  #     - CORE_PEER_ADDRESS=peer0.banker-org:11051
+  #     - CORE_PEER_LOCALMSPID=bankerOrgMSP
+  #     - CORE_PEER_TLS_ENABLED=true
+  #     - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/banker-org/peers/peer0.banker-org/tls/server.crt
+  #     - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/banker-org/peers/peer0.banker-org/tls/server.key
+  #     - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/banker-org/peers/peer0.banker-org/tls/ca.crt
+  #     - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/banker-org/users/Admin@banker-org/msp
+  #   command: /bin/bash
+  #   volumes:
+  #       - /var/run/:/host/var/run/
+  #       - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+  #       - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+  #       - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+  #       - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+  #   depends_on:
+  #     - OrdererOrg
+  #     - peer0.seller-org
+  #     # - peer1.seller-org
+  #     - peer0.trader-org
+  #     # - peer1.trader-org
+  #     - peer0.buyer-org
+  #     # - peer1.buyer-org
+  #     - peer0.banker-org
+  #     # - peer1.banker-org
+  #     - peer0.shipper-org
+  #     # - peer1.shipper-org
+  #   networks:
+  #     - byfn
+
+
+  # cli4:
+  #   container_name: cli4
+  #   image: hyperledger/fabric-tools:$IMAGE_TAG
+  #   tty: true
+  #   stdin_open: true
+  #   environment:
+  #     - SYS_CHANNEL=$SYS_CHANNEL
+  #     - GOPATH=/opt/gopath
+  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+  #     #- FABRIC_LOGGING_SPEC=DEBUG
+  #     - FABRIC_LOGGING_SPEC=INFO
+  #     - CORE_PEER_ID=cli
+  #     - CORE_PEER_ADDRESS=peer0.shipper-org:12051
+  #     - CORE_PEER_LOCALMSPID=shipperOrgMSP
+  #     - CORE_PEER_TLS_ENABLED=true
+  #     - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper-org/peers/peer0.shipper-org/tls/server.crt
+  #     - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper-org/peers/peer0.shipper-org/tls/server.key
+  #     - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper-org/peers/peer0.shipper-org/tls/ca.crt
+  #     - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper-org/users/Admin@shipper-org/msp
+  #   command: /bin/bash
+  #   volumes:
+  #       - /var/run/:/host/var/run/
+  #       - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+  #       - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+  #       - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+  #       - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+  #   depends_on:
+  #     - OrdererOrg
+  #     - peer0.seller-org
+  #     # - peer1.seller-org
+  #     - peer0.trader-org
+  #     # - peer1.trader-org
+  #     - peer0.buyer-org
+  #     # - peer1.buyer-org
+  #     - peer0.banker-org
+  #     # - peer1.banker-org
+  #     - peer0.shipper-org
+  #     # - peer1.shipper-org
+  #   networks:
+  #     - byfn

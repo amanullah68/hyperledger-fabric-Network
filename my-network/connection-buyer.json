@@ -1,0 +1,60 @@
+{
+    "name": "Triterras",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Buyer",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Buyer": {
+            "mspid": "BuyerMSP",
+            "peers": [
+                "peer0.buyer.triterras.com",
+                "peer1.buyer.triterras.com"
+            ],
+            "certificateAuthorities": [
+                "ca-buyer"
+            ]
+        }
+    },
+    "peers": {
+        "peer0.buyer.triterras.com": {
+            "url": "grpcs://localhost:9051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\n\rMIICYjCCAgmgAwIBAgIQaqrSVtKJ6Wo8rW6Kc9wBHzAKBggqhkjOPQQDAjB8MQsw\n\rCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\n\rYW5jaXNjbzEcMBoGA1UEChMTYnV5ZXIudHJpdGVycmFzLmNvbTEiMCAGA1UEAxMZ\n\rdGxzY2EuYnV5ZXIudHJpdGVycmFzLmNvbTAeFw0yMDA1MTMwODU1MDBaFw0zMDA1\n\rMTEwODU1MDBaMHwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYw\n\rFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRwwGgYDVQQKExNidXllci50cml0ZXJyYXMu\n\rY29tMSIwIAYDVQQDExl0bHNjYS5idXllci50cml0ZXJyYXMuY29tMFkwEwYHKoZI\n\rzj0CAQYIKoZIzj0DAQcDQgAEU0AdKxpPxotP0BUdLN0Gex99ShwLRnDauDZZMKGr\n\rVlyzuRo4RR0TKDpVmVa6s3KQrHrRE1JZNfOmFiODg1RVs6NtMGswDgYDVR0PAQH/\n\rBAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8E\n\rBTADAQH/MCkGA1UdDgQiBCBUY1CWBOUyvl1h0NCja2lmeIB66M3HjSBQUyYyVeV+\n\r9jAKBggqhkjOPQQDAgNHADBEAiAWfnWUjVpyOkOJmVYCEsroaLTyt2f0DjEvvHOx\n\ryYOfPwIgOLCkVqBZlwrJ1DFF8iKzq7XUAEYG/Tf4AhUFHQP/rwk=\n\r-----END CERTIFICATE-----\n\r"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.buyer.triterras.com",
+                "hostnameOverride": "peer0.buyer.triterras.com"
+            }
+        },
+        "peer1.buyer.triterras.com": {
+            "url": "grpcs://localhost:9056",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\n\rMIICYjCCAgmgAwIBAgIQaqrSVtKJ6Wo8rW6Kc9wBHzAKBggqhkjOPQQDAjB8MQsw\n\rCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\n\rYW5jaXNjbzEcMBoGA1UEChMTYnV5ZXIudHJpdGVycmFzLmNvbTEiMCAGA1UEAxMZ\n\rdGxzY2EuYnV5ZXIudHJpdGVycmFzLmNvbTAeFw0yMDA1MTMwODU1MDBaFw0zMDA1\n\rMTEwODU1MDBaMHwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYw\n\rFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRwwGgYDVQQKExNidXllci50cml0ZXJyYXMu\n\rY29tMSIwIAYDVQQDExl0bHNjYS5idXllci50cml0ZXJyYXMuY29tMFkwEwYHKoZI\n\rzj0CAQYIKoZIzj0DAQcDQgAEU0AdKxpPxotP0BUdLN0Gex99ShwLRnDauDZZMKGr\n\rVlyzuRo4RR0TKDpVmVa6s3KQrHrRE1JZNfOmFiODg1RVs6NtMGswDgYDVR0PAQH/\n\rBAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8E\n\rBTADAQH/MCkGA1UdDgQiBCBUY1CWBOUyvl1h0NCja2lmeIB66M3HjSBQUyYyVeV+\n\r9jAKBggqhkjOPQQDAgNHADBEAiAWfnWUjVpyOkOJmVYCEsroaLTyt2f0DjEvvHOx\n\ryYOfPwIgOLCkVqBZlwrJ1DFF8iKzq7XUAEYG/Tf4AhUFHQP/rwk=\n\r-----END CERTIFICATE-----\n\r"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.buyer.triterras.com",
+                "hostnameOverride": "peer1.buyer.triterras.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca-buyer": {
+            "url": "https://localhost:9054",
+            "caName": "ca-buyer",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\n\rMIICXDCCAgOgAwIBAgIQPLDCjbBlL+pzYC3JMIZ0bTAKBggqhkjOPQQDAjB5MQsw\n\rCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\n\rYW5jaXNjbzEcMBoGA1UEChMTYnV5ZXIudHJpdGVycmFzLmNvbTEfMB0GA1UEAxMW\n\rY2EuYnV5ZXIudHJpdGVycmFzLmNvbTAeFw0yMDA1MTMwODU1MDBaFw0zMDA1MTEw\n\rODU1MDBaMHkxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYD\n\rVQQHEw1TYW4gRnJhbmNpc2NvMRwwGgYDVQQKExNidXllci50cml0ZXJyYXMuY29t\n\rMR8wHQYDVQQDExZjYS5idXllci50cml0ZXJyYXMuY29tMFkwEwYHKoZIzj0CAQYI\n\rKoZIzj0DAQcDQgAEXs/l9QEZpQyj//peniEFH3TZxQklj5nsi00AxqRP5UVd6V4h\n\rupIfrIN798xewBD192GGUm9maFpn37xEv+JNdaNtMGswDgYDVR0PAQH/BAQDAgGm\n\rMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/\n\rMCkGA1UdDgQiBCDOAxUcPpFR2DMxxtKlX4L2LiPkSqS/hVFfj7sQawO2CzAKBggq\n\rhkjOPQQDAgNHADBEAiAn79w09Hg5u4OzyqRC3zmNfmzxnnSyf0BMugJ4ruUQAgIg\n\rWU0lMlKKjWk9mEirAd/hFjW4/JB/GkpBfNX9PAfF1So=\n\r-----END CERTIFICATE-----\n\r"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

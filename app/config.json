@@ -1,0 +1,9 @@
+{
+    "connection_file": "connection.yaml",
+    "appAdmin": "admin",
+    "appAdminSecret": "adminpw",
+    "orgMSPID": "SellerMSP",
+    "caName": "ca-seller",
+    "userName": "admin",
+    "gatewayDiscovery": { "enabled": false, "asLocalhost": true }
+}

@@ -1,0 +1,28 @@
+---
+name: "shipper"
+
+x-type: "hlfv1"
+
+description: "Balance Transfer Network - client definition for Shipper"
+
+version: "1.0"
+
+client:
+  organization: Shipper
+  connection:
+    timeout:
+      peer:
+        endorser: 300
+        orderer: 300
+
+  credentialStore:
+    path: "./fabric-client-kvs-shipper"
+    cryptoStore:
+      path: "./fabric-client-cvs-shipper"
+    wallet: wallet-name
+
+  clientPrivateKey:
+    path: ./crypto-config/peerOrganizations/shipper.triterras.com/users/User1@shipper.triterras.com/msp/keystore/key.pem
+  clientSignedCert:
+    path: ./crypto-config/peerOrganizations/shipper.triterras.com/users/User1@shipper.triterras.com/msp/signcerts/User1@shipper.triterras.com-cert.pem
+    

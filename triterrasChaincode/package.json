@@ -1,0 +1,14 @@
+{
+  "name": "triterraschaincode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "triterrasContract.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fabric-shim": "^1.4.0"
+  }
+}

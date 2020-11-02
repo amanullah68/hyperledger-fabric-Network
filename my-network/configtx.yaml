@@ -1,0 +1,350 @@
+Organizations:
+
+
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/triterras.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+
+
+    - &Seller
+        Name: SellerMSP
+        ID: SellerMSP
+
+        MSPDir: crypto-config/peerOrganizations/seller.triterras.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('SellerMSP.admin', 'SellerMSP.peer', 'SellerMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('SellerMSP.admin', 'SellerMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('SellerMSP.admin')"
+
+        AnchorPeers:
+            - Host: peer0.seller.triterras.com
+              Port: 7051
+
+    - &Trader
+        Name: TraderMSP
+        ID: TraderMSP
+
+        MSPDir: crypto-config/peerOrganizations/trader.triterras.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('TraderMSP.admin', 'TraderMSP.peer', 'TraderMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('TraderMSP.admin', 'TraderMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('TraderMSP.admin')"
+
+        AnchorPeers:
+            - Host: peer0.trader.triterras.com
+              Port: 8051
+              
+    - &Buyer
+        Name: BuyerMSP
+        ID: BuyerMSP
+
+        MSPDir: crypto-config/peerOrganizations/buyer.triterras.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('BuyerMSP.admin', 'BuyerMSP.peer', 'BuyerMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('BuyerMSP.admin', 'BuyerMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('BuyerMSP.admin')"
+
+        AnchorPeers:
+            - Host: peer0.buyer.triterras.com
+              Port: 9051
+
+    - &Banker
+        Name: BankerMSP
+        ID: BankerMSP
+    
+        MSPDir: crypto-config/peerOrganizations/banker.triterras.com/msp
+    
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('BankerMSP.admin', 'BankerMSP.peer', 'BankerMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('BankerMSP.admin', 'BankerMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('BankerMSP.admin')"
+
+        AnchorPeers:
+            - Host: peer0.banker.triterras.com
+              Port: 10051
+
+    - &Shipper
+        Name: ShipperMSP
+        ID: ShipperMSP
+          
+        MSPDir: crypto-config/peerOrganizations/shipper.triterras.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('ShipperMSP.admin', 'ShipperMSP.peer', 'ShipperMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('ShipperMSP.admin', 'ShipperMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('ShipperMSP.admin')"
+    
+        AnchorPeers:
+            - Host: peer0.shipper.triterras.com
+              Port: 11051
+
+Capabilities:
+    Channel: &ChannelCapabilities
+        V1_4_3: true
+        V1_3: false
+        V1_1: false
+
+    Orderer: &OrdererCapabilities
+        V1_4_2: true
+        V1_1: false
+
+    Application: &ApplicationCapabilities
+        V1_4_2: true
+        V1_3: false
+        V1_2: false
+        V1_1: false
+
+Application: &ApplicationDefaults
+
+    Organizations:
+
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+
+    OrdererType: solo
+
+    Addresses:
+        - orderer.triterras.com:7050
+        - orderer2.triterras.com:7050
+        - orderer3.triterras.com:7050
+        - orderer4.triterras.com:7050
+        - orderer5.triterras.com:7050
+
+    BatchTimeout: 2s
+
+    BatchSize:
+
+        MaxMessageCount: 10
+
+        AbsoluteMaxBytes: 99 MB
+
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+
+        Brokers:
+            - 127.0.0.1:9092
+    
+    EtcdRaft:
+        Consenters:
+            - Host: orderer.triterras.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/tls/server.crt
+            - Host: orderer2.triterras.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer2.triterras.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer2.triterras.com/tls/server.crt
+            - Host: orderer3.triterras.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer3.triterras.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer3.triterras.com/tls/server.crt
+            - Host: orderer4.triterras.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer4.triterras.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer4.triterras.com/tls/server.crt
+            - Host: orderer5.triterras.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer5.triterras.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer5.triterras.com/tls/server.crt
+
+
+    Organizations:
+
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ChannelCapabilities
+
+
+Profiles:
+
+    FourOrgsOrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            TriterrasConsortium:
+                Organizations:
+                    - *Seller
+                    - *Trader
+                    - *Buyer
+                    - *Banker
+                    - *Shipper
+    FourOrgsChannel:
+        Consortium: TriterrasConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Seller
+                - *Trader
+                - *Buyer
+                - *Banker
+                - *Shipper
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    FourOrgsChannel1:
+        Consortium: TriterrasConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Trader
+                - *Buyer
+                - *Banker
+                - *Shipper
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    FourOrgsChannel2:
+        Consortium: TriterrasConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Seller
+                - *Trader
+                - *Buyer
+                - *Banker
+                - *Shipper
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    MultiNodeEtcdRaft:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:
+                - Host: orderer.triterras.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer.triterras.com/tls/server.crt
+                - Host: orderer2.triterras.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer2.triterras.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer2.triterras.com/tls/server.crt
+                - Host: orderer3.triterras.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer3.triterras.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer3.triterras.com/tls/server.crt
+                - Host: orderer4.triterras.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer4.triterras.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer4.triterras.com/tls/server.crt
+                - Host: orderer5.triterras.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer5.triterras.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/triterras.com/orderers/orderer5.triterras.com/tls/server.crt
+            
+            Addresses:
+                - orderer.triterras.com:7050
+                - orderer2.triterras.com:7050
+                - orderer3.triterras.com:7050
+                - orderer4.triterras.com:7050
+                - orderer5.triterras.com:7050
+
+            Organizations:
+            - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *OrdererOrg
+        Consortiums:
+            TriterrasConsortium:
+                Organizations:
+                - *Seller
+                - *Trader
+                - *Buyer
+                - *Banker
+                - *Shipper

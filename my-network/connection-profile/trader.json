@@ -1,0 +1,81 @@
+{
+   "name":"triterras",
+   "version":"1.0.0",
+   "license":"Apache-2.0",
+   "client":{
+      "tlsEnable":true,
+      "adminUser": "admin",
+        "adminPassword": "adminpw",
+      "enableAuthentication":true,
+      "organization": "Trader",
+      "adminCredential":{
+         "id":"admin",
+         "password":"adminpw"
+      },
+      "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+   },
+   "channels":{
+      "mychannel":{
+         "peers":{
+            "peer0.trader.triterras.com":{
+              "endorser": "6000",
+              "eventHub": "6000",
+              "eventReg": "6000"
+            },
+            "peer1.trader.triterras.com":{
+               "endorser": "6000",
+               "eventHub": "6000",
+               "eventReg": "6000"
+            }
+         },
+         "connection":{
+            "timeout":{
+               "peer":{
+                  "endorser":"6000",
+                  "eventHub":"6000",
+                  "eventReg":"6000"
+               }
+            }
+         }
+      }
+   },
+   "organizations":{
+      "Trader":{
+         "mspid":"TraderMSP",
+         "fullpath": true,
+         "adminPrivateKey":{
+            "path":"/tmp/crypto/peerOrganizations/trader.triterras.com/users/Admin@trader.triterras.com/msp/keystore/daedbb68f917ba1579eff6e6091bdd97ea9cff764b76d9a5c2594363733b3feb_sk"
+         },
+         "signedCert":{
+            "path":"/tmp/crypto/peerOrganizations/trader.triterras.com/users/Admin@trader.triterras.com/msp/signcerts/Admin@trader.triterras.com-cert.pem"
+         }
+      }
+   },
+   "peers":{
+      "peer0.trader.triterras.com":{
+         "tlsCACerts":{
+            "path":"/tmp/crypto/peerOrganizations/trader.triterras.com/peers/peer0.trader.triterras.com/tls/ca.crt"
+         },
+         "url":"grpcs://peer0.trader.triterras.com:8051",
+         "grpcOptions":{
+            "ssl-target-name-override":"peer0.trader.triterras.com"
+         }
+      },
+      "peer1.trader.triterras.com":{
+         "tlsCACerts":{
+            "path":"/tmp/crypto/peerOrganizations/trader.triterras.com/peers/peer1.trader.triterras.com/tls/ca.crt"
+         },
+         "url":"grpcs://peer1.trader.triterras.com:8051",
+         "grpcOptions":{
+            "ssl-target-name-override":"peer1.trader.triterras.com"
+         }
+      }
+   }
+}
